@@ -143,11 +143,11 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        shouldHideStatusBar = true
-        initialStatusBarHidden = true
-        UIView.animate(withDuration: 0.3) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
+//        shouldHideStatusBar = true
+//        initialStatusBarHidden = true
+//        UIView.animate(withDuration: 0.3) {
+//            self.setNeedsStatusBarAppearanceUpdate()
+//        }
     }
     
     internal func pagerScrollViewDidScroll(_ scrollView: UIScrollView) { }
@@ -260,10 +260,12 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     }
     
     func updateUI() {
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                            target: self,
                                                            action: #selector(close))
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+        
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")
