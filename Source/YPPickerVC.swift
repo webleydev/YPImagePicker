@@ -235,7 +235,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         let label = UILabel()
         label.text = aTitle
-        label.textColor = UIColor.red//UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+        label.textColor = .black
         
         let arrow = UIImageView()
         arrow.image = imageFromBundle("yp_arrow")
