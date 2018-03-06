@@ -19,7 +19,7 @@ public class YPImagePicker: UINavigationController {
     private static var defaultConfiguration = YPImagePickerConfiguration()
     
     private let configuration: YPImagePickerConfiguration!
-    private let picker: YPPickerVC!
+    let picker: YPPickerVC!
     
     /// Get a YPImagePicker instance with the default configuration.
     public convenience init() {
