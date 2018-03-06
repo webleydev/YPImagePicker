@@ -259,8 +259,13 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     }
     
     func updateUI() {
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(image:  imageFromBundle("yp_back"), style: .plain, target: self, action: #selector(close))
+        let backImage = imageFromBundle("yp_back")
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(imageFromBundle("yp_back"), for: .normal) // Image can be downloaded from here below link
+        backButton.setTitle("", for: .normal)
+        backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         
         switch mode {
