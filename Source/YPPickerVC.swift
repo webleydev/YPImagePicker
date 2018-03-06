@@ -260,9 +260,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     func updateUI() {
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                                           target: self,
-                                                           action: #selector(close))
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "<", style: .plain, target: self, action: #selector(close))
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         
         switch mode {
