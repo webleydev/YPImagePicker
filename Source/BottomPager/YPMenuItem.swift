@@ -42,7 +42,7 @@ final class YPMenuItem: UIView {
     }
     
     func select() {
-        text.textColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+        text.textColor = selectedColor()
     }
     
     func unselect() {
