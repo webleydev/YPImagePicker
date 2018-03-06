@@ -9,6 +9,8 @@
 "YPImagePickerLibrary" = "Biblioteca";
 "YPImagePickerPhoto" = "Foto";
 "YPImagePickerVideo" = "Vídeo";
+"YPImagePickerCamera" = "Camera";
+
 "YPImagePickerNext" = "Siguiente";
 "YPImagePickerFilter" = "Filtro";
 "YPImagePickerVideoTooLongTitle" = "Demasiado largo";

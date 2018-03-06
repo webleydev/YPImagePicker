@@ -237,8 +237,8 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         label.text = aTitle
         label.textColor = UIColor.red//UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         
-        let arrow = UIImageView()
-        arrow.image = imageFromBundle("yp_arrow")
+        //let arrow = UIImageView()
+       // arrow.image = imageFromBundle("yp_arrow")
         
         let button = UIButton()
         button.addTarget(self, action: #selector(navBarTapped), for: .touchUpInside)
@@ -247,14 +247,13 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         titleView.sv(
             label,
-            arrow,
             button
         )
         
         |-(>=8)-label.centerInContainer()-(>=8)-|
     
         button.fillContainer()
-        alignHorizontally(label-arrow)
+        alignHorizontally(label)
         
         navigationItem.titleView = titleView
     }

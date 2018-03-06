@@ -29,7 +29,7 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, Permissi
     public required init(configuration: YPImagePickerConfiguration) {
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
-        title = ypLocalized("YPImagePickerPhoto")
+        title = ypLocalized("YPImagePickerCamera")
     }
     
     public required init?(coder aDecoder: NSCoder) {

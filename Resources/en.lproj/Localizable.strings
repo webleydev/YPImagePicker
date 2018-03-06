@@ -8,6 +8,7 @@
 
 "YPImagePickerLibrary" = "Library";
 "YPImagePickerPhoto" = "Photo";
+"YPImagePickerCamera" = "Camera";
 "YPImagePickerVideo" = "Video";
 "YPImagePickerNext" = "Next";
 "YPImagePickerFilter" = "Filter";
