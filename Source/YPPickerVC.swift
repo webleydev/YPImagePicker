@@ -270,7 +270,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -20
+        negativeSpacer.width = -40
 
         let backBarButton = UIBarButtonItem.init(customView: backButton)
         
