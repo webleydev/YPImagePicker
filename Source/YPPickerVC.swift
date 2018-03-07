@@ -262,7 +262,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         let backImage = imageFromBundle("yp_back")
         let backButton = UIButton(type: .custom)
-        backButton.frame = CGRect.init(x: 0, y: 0, width: 29, height: 29)
+
         backButton.setImage(backImage, for: .normal)
         backButton.setTitle("", for: .normal)
         backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
@@ -270,7 +270,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -5
+        negativeSpacer.width = -20
 
         let backBarButton = UIBarButtonItem.init(customView: backButton)
         
