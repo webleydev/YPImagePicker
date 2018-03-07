@@ -264,6 +264,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         let backButton = UIButton(type: .custom)
         backButton.frame = CGRect.init(x: 0, y: 0, width: 44, height: 44)
         backButton.setImage(backImage, for: .normal)
+        backButton.backgroundColor = .black
         backButton.setTitle("", for: .normal)
         backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
