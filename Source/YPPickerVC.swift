@@ -259,15 +259,16 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     }
     
     func updateUI() {
-        self.navigationController?.navigationItem.hidesBackButton = false
-//        let backImage = imageFromBundle("yp_back")
-//        let backButton = UIButton(type: .custom)
-//        backButton.setImage(imageFromBundle("yp_back"), for: .normal) // Image can be downloaded from here below link
-//        backButton.setTitle("", for: .normal)
-//        backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
-//        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-//        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
-//        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+        
+        let backImage = imageFromBundle("yp_back")
+        let backButton = UIButton(type: .custom)
+        backButton.frame = CGRect.init(x: 0, y: 0, width: 44, height: 44)
+        backButton.setImage(backImage, for: .normal)
+        backButton.setTitle("", for: .normal)
+        backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         
         switch mode {
         case .library:
