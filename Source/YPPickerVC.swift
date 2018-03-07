@@ -268,8 +268,8 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         backButton.setTitle("", for: .normal)
         backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
-        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(customView: backButton)
+        navigationItem.backBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         
         switch mode {
         case .library:
