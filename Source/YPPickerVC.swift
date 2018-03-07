@@ -266,9 +266,16 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         backButton.setImage(backImage, for: .normal)
         backButton.setTitle("", for: .normal)
         backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
+        
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
-        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+        
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -5
+
+        let backBarButton = UIBarButtonItem.init(customView: backButton)
+        
+        navigationItem.leftBarButtonItems = [negativeSpacer, backBarButton]
+        backBarButton.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         navigationItem.hidesBackButton = false
         switch mode {
         case .library:
