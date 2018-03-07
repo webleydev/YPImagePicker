@@ -274,7 +274,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 
         let backBarButton = UIBarButtonItem.init(customView: backButton)
         
-        navigationItem.leftBarButtonItems = [negativeSpacer, backBarButton]
+        navigationItem.leftBarButtonItems = [backBarButton,negativeSpacer]
         backBarButton.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
         navigationItem.hidesBackButton = false
         switch mode {
