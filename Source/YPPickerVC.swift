@@ -270,7 +270,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         navigationItem.backBarButtonItem = UIBarButtonItem.init(customView: backButton)
         navigationItem.backBarButtonItem?.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
-        
+        navigationItem.hidesBackButton = false
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")
