@@ -261,22 +261,10 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     func updateUI() {
         
         let backImage = imageFromBundle("yp_back")
-        let backButton = UIButton(type: .custom)
-
-        backButton.setImage(backImage, for: .normal)
-        backButton.setTitle("", for: .normal)
-        backButton.setTitleColor(UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0), for: .normal) // You can change the TitleColor
+        let backBarButton = UIBarButtonItem.init(image: backImage, style: .plain, target: self, action: #selector(close))
+        backBarButton.imageInsets = UIEdgeInsets.init(top: 0, left: -14, bottom: 0, right: 0)
+        navigationItem.leftBarButtonItem = backBarButton
         
-        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -40
-
-        let backBarButton = UIBarButtonItem.init(customView: backButton)
-        
-        navigationItem.leftBarButtonItems = [backBarButton,negativeSpacer]
-        backBarButton.tintColor = UIColor(red: 81.0/255.0, green: 174.0/255.0, blue: 95.0/255.0, alpha: 1.0)
-        navigationItem.hidesBackButton = false
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")
