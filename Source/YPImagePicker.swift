@@ -38,7 +38,7 @@ public class YPImagePicker: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public var didSelectImage: ((UIImage) -> Void)?
+    public var didSelectImage: ((UIImage, Data?) -> Void)?
     public var didSelectVideo: ((Data, UIImage, URL) -> Void)?
     
     private let loadingContainerView: UIView = {
@@ -115,7 +115,8 @@ public class YPImagePicker: UINavigationController {
                 filterVC.didSelectImage = { filteredImage, isImageFiltered in
                     
                     let completion = { (image: UIImage) in
-                        self.didSelectImage?(image)
+                        let imgData = UIImageJPEGRepresentation(image, 0.2)
+                        self.didSelectImage?(image, imgData)
                         if (isNewPhoto || isImageFiltered) && self.configuration.shouldSaveNewPicturesToAlbum {
                             YPPhotoSaver.trySaveImage(filteredImage, inAlbumNamed: self.configuration.albumName)
                         }
@@ -142,7 +143,8 @@ public class YPImagePicker: UINavigationController {
                 self.pushViewController(filterVC, animated: false)
             } else {
                 let completion = { (image: UIImage) in
-                    self.didSelectImage?(image)
+                    let imgData = UIImageJPEGRepresentation(image, 0.2)
+                    self.didSelectImage?(image, imgData)
                     if isNewPhoto && self.configuration.shouldSaveNewPicturesToAlbum {
                         YPPhotoSaver.trySaveImage(newPickedImage, inAlbumNamed: self.configuration.albumName)
                     }
