@@ -98,9 +98,20 @@ public class YPImagePicker: UINavigationController {
         viewControllers = [picker]
         setupActivityIndicator()
         navigationBar.isTranslucent = false
+        
         picker.didSelectImage = { [unowned self] pickedImage, isNewPhoto in
+
+            let  image = pickedImage
+            let size = CGSize(width: 1080, height: 1080)
+            let rect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
+            UIGraphicsBeginImageContext(rect.size)
+            image.draw(in: rect)
+            
+            guard let newPickedImage = UIGraphicsGetImageFromCurrentImageContext() else { return }
+            UIGraphicsEndImageContext()
+            
             if self.configuration.showsFilters {
-                let filterVC = YPFiltersVC(image: pickedImage)
+                let filterVC = YPFiltersVC(image: newPickedImage)
                 filterVC.didSelectImage = { filteredImage, isImageFiltered in
                     
                     let completion = { (image: UIImage) in
@@ -117,7 +128,7 @@ public class YPImagePicker: UINavigationController {
                         }
                         self.pushViewController(cropVC, animated: true)
                     } else {
-                        completion(filteredImage)
+                        completion(newPickedImage)
                     }
                 }
                 
@@ -133,17 +144,17 @@ public class YPImagePicker: UINavigationController {
                 let completion = { (image: UIImage) in
                     self.didSelectImage?(image)
                     if isNewPhoto && self.configuration.shouldSaveNewPicturesToAlbum {
-                        YPPhotoSaver.trySaveImage(pickedImage, inAlbumNamed: self.configuration.albumName)
+                        YPPhotoSaver.trySaveImage(newPickedImage, inAlbumNamed: self.configuration.albumName)
                     }
                 }
                 if case let YPCropType.rectangle(ratio) = self.configuration.showsCrop {
-                    let cropVC = YPCropVC(image: pickedImage, ratio: ratio)
+                    let cropVC = YPCropVC(image: newPickedImage, ratio: ratio)
                     cropVC.didFinishCropping = { croppedImage in
                         completion(croppedImage)
                     }
                     self.pushViewController(cropVC, animated: true)
                 } else {
-                    completion(pickedImage)
+                    completion(newPickedImage)
                 }
             }
         }
