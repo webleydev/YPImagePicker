@@ -236,9 +236,10 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         let label = UILabel()
         label.text = aTitle
         label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
         
-        //let arrow = UIImageView()
-       // arrow.image = imageFromBundle("yp_arrow")
+        let arrow = UIImageView()
+        arrow.image = imageFromBundle("yp_arrow")
         
         let button = UIButton()
         button.addTarget(self, action: #selector(navBarTapped), for: .touchUpInside)
