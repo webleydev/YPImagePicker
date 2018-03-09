@@ -248,13 +248,14 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         titleView.sv(
             label,
+            arrow,
             button
         )
         
         |-(>=8)-label.centerInContainer()-(>=8)-|
-    
+        
         button.fillContainer()
-        alignHorizontally(label)
+        alignHorizontally(label-arrow)
         
         navigationItem.titleView = titleView
     }
