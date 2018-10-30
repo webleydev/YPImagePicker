@@ -23,7 +23,6 @@ extension UIColor {
 
 public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
-    let albumsManager = YPAlbumsManager()
     private let configuration: YPImagePickerConfiguration!
     public required init(configuration: YPImagePickerConfiguration) {
         self.configuration = configuration
@@ -50,7 +49,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         case camera
         case video
     }
-    
+
     private var libraryVC: YPLibraryVC?
     private var cameraVC: YPCameraVC?
     private var videoVC: YPVideoVC?
@@ -66,13 +65,13 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         flashOnImage = imageFromBundle("yp_iconFlash_on")
         flashOffImage = imageFromBundle("yp_iconFlash_off")
         flashAutoImage = imageFromBundle("yp_iconFlash_auto")
         
         view.backgroundColor = UIColor(r: 247, g: 247, b: 247)
-        
+
         delegate = self
         
         // Library
@@ -96,7 +95,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                 self.didSelectVideo?(videoURL)
             }
         }
-        
+    
         // Show screens
         var vcs = [UIViewController]()
         for screen in configuration.screens {
@@ -116,7 +115,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
             }
         }
         controllers = vcs
-        
+      
         // Select good mode
         if configuration.screens.contains(configuration.startOnScreen) {
             switch configuration.startOnScreen {
@@ -144,11 +143,11 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //        shouldHideStatusBar = true
-        //        initialStatusBarHidden = true
-        //        UIView.animate(withDuration: 0.3) {
-        //            self.setNeedsStatusBarAppearanceUpdate()
-        //        }
+//        shouldHideStatusBar = true
+//        initialStatusBarHidden = true
+//        UIView.animate(withDuration: 0.3) {
+//            self.setNeedsStatusBarAppearanceUpdate()
+//        }
     }
     
     internal func pagerScrollViewDidScroll(_ scrollView: UIScrollView) { }
@@ -216,10 +215,10 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     @objc
     func navBarTapped() {
         
-        let vc = YPAlbumVC(albumsManager: albumsManager)
-        //vc.noVideos = !self.configuration.showsVideoInLibrary
+        let vc = YPAlbumVC()
+        vc.noVideos = !self.configuration.showsVideoInLibrary
         let navVC = UINavigationController(rootViewController: vc)
-        
+
         vc.didSelectAlbum = { [weak self] album in
             self?.libraryVC?.setAlbum(album)
             self?.libraryVC?.title = album.title
@@ -245,7 +244,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         let button = UIButton()
         button.addTarget(self, action: #selector(navBarTapped), for: .touchUpInside)
         button.setBackgroundColor(UIColor.white.withAlphaComponent(0.5), forState: .highlighted)
-        
+  
         
         titleView.sv(
             label,

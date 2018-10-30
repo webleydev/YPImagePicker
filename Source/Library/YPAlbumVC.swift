@@ -5,6 +5,7 @@
 //  Created by Sacha Durand Saint Omer on 20/07/2017.
 //  Copyright © 2017 Yummypets. All rights reserved.
 //
+
 import UIKit
 import Stevia
 import Photos
@@ -17,19 +18,11 @@ class YPAlbumVC: UIViewController {
     
     var didSelectAlbum: ((YPAlbum) -> Void)?
     var albums = [YPAlbum]()
-    let albumsManager: YPAlbumsManager
+    var noVideos = false
+    let albumsManager = YPAlbumsManager.default
     
     let v = YPAlbumView()
     override func loadView() { view = v }
-    
-    required init(albumsManager: YPAlbumsManager) {
-        self.albumsManager = albumsManager
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +31,7 @@ class YPAlbumVC: UIViewController {
                                                            target: self,
                                                            action: #selector(close))
         setUpTableView()
+        albumsManager.noVideos = noVideos
         fetchAlbumsInBackground()
     }
     

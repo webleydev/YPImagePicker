@@ -11,11 +11,11 @@ import Photos
 
 class YPAlbumsManager {
     
-    //    private static let instance = YPAlbumsManager()
-    //
-    //    class var `default`: YPAlbumsManager {
-    //        return instance
-    //    }
+    private static let instance = YPAlbumsManager()
+    
+    class var `default`: YPAlbumsManager {
+        return instance
+    }
     
     private var cachedAlbums: [YPAlbum]?
     
@@ -28,7 +28,7 @@ class YPAlbumsManager {
         
         var albums = [YPAlbum]()
         let options = PHFetchOptions()
-        
+                
         let smartAlbumsResult = PHAssetCollection
             .fetchAssetCollections(with: .smartAlbum, subtype: .any, options: options)
         let albumsResult = PHAssetCollection
