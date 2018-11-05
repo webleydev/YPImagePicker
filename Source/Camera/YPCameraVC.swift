@@ -72,10 +72,16 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, Permissi
         DispatchQueue.main.async {
             videoLayer.frame = self.v.previewViewContainer.bounds
             videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            self.v.previewViewContainer.layer.insertSublayer(videoLayer, at: 0)
             self.v.previewViewContainer.layer.addSublayer(videoLayer)
+            
             let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.focusTapped(_:)))
             tapRecognizer.delegate = self
             self.v.previewViewContainer.addGestureRecognizer(tapRecognizer)
+            
+            let pinchRecoznizer = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinch(toZoom:)))
+            pinchRecoznizer.cancelsTouchesInView = false
+            self.v.previewViewContainer.addGestureRecognizer(pinchRecoznizer)
         }
     }
     
@@ -114,6 +120,29 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, Permissi
         configureFocusView(v.focusView)
         v.addSubview(v.focusView)
         animateFocusView(v.focusView)
+    }
+    
+    @objc func handlePinch(toZoom pinchRecognizer: UIPinchGestureRecognizer?) {
+        let pinchVelocityDividerFactor: CGFloat = 5.0
+        if pinchRecognizer?.state == .changed {
+            let cameraPosition: AVCaptureDevice.Position = self.configuration.usesFrontCamera ? .front : .back
+            
+            guard let videoDevice = deviceForPosition(cameraPosition) else {
+                return
+            }
+            
+            var error: Error? = nil
+            if try! videoDevice.lockForConfiguration() != nil {
+                let desiredZoomFactor: CGFloat = videoDevice.videoZoomFactor + CGFloat(atan2f(Float(pinchRecognizer?.velocity ?? 0.0), Float(pinchVelocityDividerFactor)))
+                // Check if desiredZoomFactor fits required range from 1.0 to activeFormat.videoMaxZoomFactor
+                videoDevice.videoZoomFactor = max(1.0, min(desiredZoomFactor, videoDevice.activeFormat.videoMaxZoomFactor))
+                videoDevice.unlockForConfiguration()
+            } else {
+                if let anError = error {
+                    print("error: \(anError)")
+                }
+            }
+        }
     }
     
     public func tryToStartCamera() {
@@ -170,7 +199,7 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, Permissi
             self.refreshFlashButton()
         }
     }
-
+    
     @objc
     func shotButtonTapped() {
         doAfterPermissionCheck { [weak self] in
@@ -272,7 +301,7 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, Permissi
             v.flashButton.isHidden = !device.hasFlash
         }
     }
-
+    
     func flashImage(forAVCaptureFlashMode: AVCaptureDevice.FlashMode) -> UIImage {
         switch forAVCaptureFlashMode {
         case .on: return flashOnImage!
@@ -296,11 +325,11 @@ class YPPermissionDeniedPopup {
         alert.addAction(UIAlertAction(title: ypLocalized("YPImagePickerPermissionDeniedPopupGrantPermission"),
                                       style: .default,
                                       handler: { _ in
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
-            } else {
-                UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
-            }
+                                        if #available(iOS 10.0, *) {
+                                            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                                        } else {
+                                            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+                                        }
         }))
         return alert
     }
