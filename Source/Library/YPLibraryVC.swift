@@ -21,7 +21,7 @@ public class YPLibraryVC: UIViewController, PermissionCheckable {
     var v: YPLibraryView!
     
     internal let panGestureHelper = PanGestureHelper()
-
+    
     // MARK: - Init
     
     public required init(configuration: YPImagePickerConfiguration) {
@@ -40,7 +40,7 @@ public class YPLibraryVC: UIViewController, PermissionCheckable {
     
     func initialize() {
         mediaManager.initialize()
-    
+        
         if mediaManager.fetchResult != nil {
             return
         }
@@ -118,7 +118,7 @@ public class YPLibraryVC: UIViewController, PermissionCheckable {
             }
         }
     }
-
+    
     // Async beacause will prompt permission if .notDetermined
     // and ask custom popup if denied.
     func checkPermissionToAccessPhotoLibrary(block: @escaping (Bool) -> Void) {
@@ -204,7 +204,7 @@ public class YPLibraryVC: UIViewController, PermissionCheckable {
             }
         }
     }
-
+    
     func changeImage(_ asset: PHAsset) {
         mediaManager.selectedAsset = asset
         latestImageTapped = asset.localIdentifier
@@ -260,7 +260,10 @@ public class YPLibraryVC: UIViewController, PermissionCheckable {
     public func selectedMedia(photoCallback:@escaping (_ photo: UIImage) -> Void,
                               videoCallback: @escaping (_ videoURL: URL) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let asset = self.mediaManager.selectedAsset!
+            guard let asset = self.mediaManager.selectedAsset else {
+                return
+            }
+            
             switch asset.mediaType {
             case .video:
                 self.fetchVideoURL(for: asset, callback: { videoURL in

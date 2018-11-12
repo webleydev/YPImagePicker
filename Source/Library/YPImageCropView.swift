@@ -83,6 +83,11 @@ final class YPImageCropView: UIScrollView, UIScrollViewDelegate {
     }
     
     func refreshZoomScale() {
+        guard image != nil else {
+            squaredZoomScale = 1.0
+            return
+        }
+        
         var squareZoomScale: CGFloat = 1.0
         let w = image.size.width
         let h = image.size.height
