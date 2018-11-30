@@ -12,7 +12,7 @@ import Photos
 extension PHFetchResult where ObjectType == PHAsset {
         
     func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset] {
-        if indexPaths.count == 0 { return [] }
+        if indexPaths.count == 0, self.count == 0 { return [] }
         var assets: [PHAsset] = []
         assets.reserveCapacity(indexPaths.count)
         for indexPath in indexPaths {
