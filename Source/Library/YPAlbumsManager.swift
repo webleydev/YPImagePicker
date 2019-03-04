@@ -19,13 +19,6 @@ class YPAlbumsManager {
     
     private var cachedAlbums: [YPAlbum]?
     
-    var shouldClearCachedAlbums = false {
-        didSet {
-            if shouldClearCachedAlbums {
-                clearCachedAlbums()
-            }
-        }
-    }
     var noVideos = false
     
     func fetchAlbums() -> [YPAlbum] {
@@ -74,10 +67,6 @@ class YPAlbumsManager {
         }
         cachedAlbums = albums
         return albums
-    }
-    
-    private func clearCachedAlbums() {
-        cachedAlbums = nil
     }
     
     func mediaCountFor(collection: PHAssetCollection) -> Int {
