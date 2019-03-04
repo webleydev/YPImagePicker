@@ -314,6 +314,9 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 }
 
 extension YPPickerVC: YPLibraryViewDelegate {
+    public func libraryDidChange() {
+        albumsManager.shouldClearCachedAlbums = true
+    }
     
     public func libraryViewStartedLoadingImage() {
         DispatchQueue.main.async {
