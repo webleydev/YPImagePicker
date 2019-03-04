@@ -13,5 +13,4 @@ public protocol YPLibraryViewDelegate: class {
     func libraryViewCameraRollUnauthorized()
     func libraryViewStartedLoadingImage()
     func libraryViewFinishedLoadingImage()
-    func libraryDidChange()
 }

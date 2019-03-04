@@ -42,9 +42,6 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
                     }, completion: nil)
                 }
                 self.mediaManager.resetCachedAssets()
-                if let d = self.delegate {
-                    d.libraryDidChange()
-                }
             }
         }
     }
