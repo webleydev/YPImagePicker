@@ -217,6 +217,7 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     func navBarTapped() {
         albumsManager.noVideos = true
         let vc = YPAlbumVC(albumsManager: albumsManager)
+        vc.fetchAlbumsInBackground()
         //vc.noVideos = !self.configuration.showsVideoInLibrary
         let navVC = UINavigationController(rootViewController: vc)
         
@@ -314,6 +315,10 @@ public class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 }
 
 extension YPPickerVC: YPLibraryViewDelegate {
+    public func libraryDidChange() {
+        albumsManager.shouldClearCachedAlbums = true
+    }
+    
     public func libraryViewStartedLoadingImage() {
         DispatchQueue.main.async {
             let spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)

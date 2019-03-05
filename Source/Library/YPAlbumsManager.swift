@@ -19,6 +19,13 @@ class YPAlbumsManager {
     
     private var cachedAlbums: [YPAlbum]?
     
+    var shouldClearCachedAlbums = false {
+        didSet {
+            if shouldClearCachedAlbums {
+                cachedAlbums = nil
+            }
+        }
+    }
     var noVideos = false
     
     func fetchAlbums() -> [YPAlbum] {
