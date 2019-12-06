@@ -22,7 +22,7 @@ public struct YPIcons {
     public var loopIcon: UIImage = imageFromBundle("yp_iconLoop")
     public var multipleSelectionOffIcon: UIImage = imageFromBundle("yp_multiple")
     public var multipleSelectionOnIcon: UIImage = imageFromBundle("yp_multiple_colored")
-    public var capturePhotoImage: UIImage = imageFromBundle("photoIcon")
+    public var capturePhotoImage: UIImage = imageFromBundle("greenPhotoIcon")
     public var captureVideoImage: UIImage = imageFromBundle("yp_iconVideoCapture")
     public var captureVideoOnImage: UIImage = imageFromBundle("yp_iconVideoCaptureRecording")
     public var playImage: UIImage = imageFromBundle("yp_play")
