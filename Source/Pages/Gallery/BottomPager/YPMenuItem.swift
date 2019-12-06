@@ -38,7 +38,7 @@ final class YPMenuItem: UIView {
         
         textLabel.centerInContainer()
         |-(10)-textLabel-(10)-|
-        button.fillContainer()
+        button.fillContainer(0)
         
         textLabel.style { l in
             l.textAlignment = .center
@@ -50,7 +50,7 @@ final class YPMenuItem: UIView {
     }
 
     func select() {
-        textLabel.textColor = YPImagePickerConfiguration.shared.colors.bottomMenuItemSelectedTextColor
+        textLabel.textColor = YPColors().tintColor
     }
     
     func deselect() {

@@ -30,7 +30,6 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
                 overlayView,
                 progressBar,
                 timeElapsedLabel,
-                flashButton,
                 flipButton,
                 buttonsContainer.sv(
                     shotButton
@@ -42,7 +41,6 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
                 previewViewContainer,
                 progressBar,
                 timeElapsedLabel,
-                flashButton,
                 flipButton,
                 buttonsContainer.sv(
                     shotButton
@@ -66,11 +64,11 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
 
         overlayView?.followEdges(previewViewContainer)
 
-        |-(15+sideMargin)-flashButton.size(42)
-        flashButton.Bottom == previewViewContainer.Bottom - 15
+//        |-(15+sideMargin)-flashButton.size(42)
+//        flashButton.Bottom == previewViewContainer.Bottom - 15
 
         flipButton.size(42)-(15+sideMargin)-|
-        flipButton.Bottom == previewViewContainer.Bottom - 15
+        flipButton.Bottom == previewViewContainer.Top + 50
         
         timeElapsedLabel-(15+sideMargin)-|
         timeElapsedLabel.Top == previewViewContainer.Top + 15
@@ -91,7 +89,7 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
             p.trackTintColor = .clear
             p.tintColor = .red
         }
-        flashButton.setImage(YPConfig.icons.flashOffIcon, for: .normal)
+//        flashButton.setImage(YPConfig.icons.flashOffIcon, for: .normal)
         flipButton.setImage(YPConfig.icons.loopIcon, for: .normal)
         shotButton.setImage(YPConfig.icons.capturePhotoImage, for: .normal)
     }

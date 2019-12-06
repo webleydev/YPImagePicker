@@ -30,8 +30,6 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermis
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        v.flashButton.isHidden = true
-        v.flashButton.addTarget(self, action: #selector(flashButtonTapped), for: .touchUpInside)
         v.shotButton.addTarget(self, action: #selector(shotButtonTapped), for: .touchUpInside)
         v.flipButton.addTarget(self, action: #selector(flipButtonTapped), for: .touchUpInside)
         
@@ -49,7 +47,6 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermis
             self?.photoCapture.start(with: strongSelf.v.previewViewContainer, completion: {
                 DispatchQueue.main.async {
                     self?.isInited = true
-                    self?.refreshFlashButton()
                 }
             })
         }
@@ -90,7 +87,7 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermis
     func flipButtonTapped() {
         doAfterPermissionCheck { [weak self] in
             self?.photoCapture.flipCamera {
-                self?.refreshFlashButton()
+                
             }
         }
     }
@@ -168,17 +165,5 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermis
         let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
-    }
-    
-    @objc
-    func flashButtonTapped() {
-        photoCapture.tryToggleFlash()
-        refreshFlashButton()
-    }
-    
-    func refreshFlashButton() {
-        let flashImage = photoCapture.currentFlashMode.flashImage()
-        v.flashButton.setImage(flashImage, for: .normal)
-        v.flashButton.isHidden = !photoCapture.hasFlash
     }
 }

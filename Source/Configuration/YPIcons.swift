@@ -10,7 +10,7 @@ import UIKit
 
 public struct YPIcons {
 
-    public var shouldChangeDefaultBackButtonIcon = false
+    public var shouldChangeDefaultBackButtonIcon = true
     public var hideBackButtonTitle = true
     
     public var backButtonIcon: UIImage = imageFromBundle("yp_arrow_left")
@@ -22,7 +22,7 @@ public struct YPIcons {
     public var loopIcon: UIImage = imageFromBundle("yp_iconLoop")
     public var multipleSelectionOffIcon: UIImage = imageFromBundle("yp_multiple")
     public var multipleSelectionOnIcon: UIImage = imageFromBundle("yp_multiple_colored")
-    public var capturePhotoImage: UIImage = imageFromBundle("yp_iconCapture")
+    public var capturePhotoImage: UIImage = imageFromBundle("photoIcon")
     public var captureVideoImage: UIImage = imageFromBundle("yp_iconVideoCapture")
     public var captureVideoOnImage: UIImage = imageFromBundle("yp_iconVideoCaptureRecording")
     public var playImage: UIImage = imageFromBundle("yp_play")

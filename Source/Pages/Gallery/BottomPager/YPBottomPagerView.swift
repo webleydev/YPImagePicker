@@ -27,15 +27,12 @@ final class YPBottomPagerView: UIView {
             0,
             |scrollView|,
             0,
-            |header| ~ 44
+            |header|,
+            0
         )
         
-        if #available(iOS 11.0, *) {
-            header.Bottom == safeAreaLayoutGuide.Bottom
-        } else {
-            header.bottom(0)
-        }
-        header.heightConstraint?.constant = YPConfig.hidesBottomBar ? 0 : 44
+        let heightConstant: CGFloat = YPConfig.hidesBottomBar ? 0 : 100
+        header.heightAnchor.constraint(lessThanOrEqualToConstant: heightConstant).isActive = true
         
         clipsToBounds = false
         setupScrollView()

@@ -31,6 +31,18 @@ final class YPPagerMenu: UIView {
                 m
             )
             
+            layout(
+                10,
+                m
+            )
+            
+            if #available(iOS 11.0, *) {
+                m.Bottom == self.safeAreaLayoutGuide.Bottom - 10
+            } else {
+                m.bottom(0)
+            }
+            
+            m.heightConstraint?.constant = YPConfig.hidesBottomBar ? 0 : 44
             m.fillVertically().width(menuItemWidth)
             if let pm = previousMenuItem {
                 pm-0-m

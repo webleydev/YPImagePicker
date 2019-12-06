@@ -70,23 +70,22 @@ class ExampleViewController: UIViewController {
         /* Uncomment and play around with the configuration 👨‍🔬 🚀 */
 
         /* Set this to true if you want to force the  library output to be a squared image. Defaults to false */
-//         config.library.onlySquare = true
-
+         config.library.onlySquare = true
         /* Set this to true if you want to force the camera output to be a squared image. Defaults to true */
-        // config.onlySquareImagesFromCamera = false
+//         config.onlySquareImagesFromCamera = true
 
         /* Ex: cappedTo:1024 will make sure images from the library or the camera will be
            resized to fit in a 1024x1024 box. Defaults to original image size. */
         // config.targetImageSize = .cappedTo(size: 1024)
 
         /* Choose what media types are available in the library. Defaults to `.photo` */
-        config.library.mediaType = .photoAndVideo
+        config.library.mediaType = .photo
 
         /* Enables selecting the front camera by default, useful for avatars. Defaults to false */
         // config.usesFrontCamera = true
 
         /* Adds a Filter step in the photo taking process. Defaults to true */
-        // config.showsFilters = false
+         config.showsPhotoFilters = false
 
         /* Manage filters by yourself */
 //        config.filters = [YPFilter(name: "Mono", coreImageFilterName: "CIPhotoEffectMono"),
@@ -96,7 +95,7 @@ class ExampleViewController: UIViewController {
 
         /* Enables you to opt out from saving new (or old but filtered) images to the
            user's photo library. Defaults to true. */
-        config.shouldSaveNewPicturesToAlbum = false
+        config.shouldSaveNewPicturesToAlbum = true
 
         /* Choose the videoCompression. Defaults to AVAssetExportPresetHighestQuality */
         config.video.compression = AVAssetExportPresetMediumQuality
@@ -111,7 +110,7 @@ class ExampleViewController: UIViewController {
 
         /* Defines which screens are shown at launch, and their order.
            Default value is `[.library, .photo]` */
-        config.screens = [.library, .photo, .video]
+        config.screens = [.library, .photo]
         
         /* Can forbid the items with very big height with this property */
 //        config.library.minWidthForItem = UIScreen.main.bounds.width * 0.8
@@ -125,7 +124,7 @@ class ExampleViewController: UIViewController {
         config.video.libraryTimeLimit = 500.0
 
         /* Adds a Crop step in the photo taking process, after filters. Defaults to .none */
-        config.showsCrop = .rectangle(ratio: (16/9))
+        config.showsCrop = .none
 
         /* Defines the overlay view for the camera. Defaults to UIView(). */
         // let overlayView = UIView()
@@ -134,15 +133,14 @@ class ExampleViewController: UIViewController {
         // config.overlayView = overlayView
 
         /* Customize wordings */
-        config.wordings.libraryTitle = "Gallery"
+        config.wordings.libraryTitle = "Library"
 
         /* Defines if the status bar should be hidden when showing the picker. Default is true */
         config.hidesStatusBar = false
 
         /* Defines if the bottom bar should be hidden when showing the picker. Default is false */
         config.hidesBottomBar = false
-
-        config.library.maxNumberOfItems = 5
+//        config.library.maxNumberOfItems = 1
         
         /* Disable scroll to change between mode */
         // config.isScrollToChangeModesEnabled = false
@@ -169,7 +167,7 @@ class ExampleViewController: UIViewController {
         //
         //config.library.options = options
 
-        config.library.preselectedItems = selectedItems
+//        config.library.preselectedItems = selectedItems
         
         let picker = YPImagePicker(configuration: config)
 
