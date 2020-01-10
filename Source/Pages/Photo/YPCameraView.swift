@@ -60,7 +60,8 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
             |buttonsContainer|,
             0
         )
-        previewViewContainer.heightEqualsWidth()
+//        previewViewContainer.heightEqualsWidth()
+        previewViewContainer.Bottom == 84 + 50
 
         overlayView?.followEdges(previewViewContainer)
 
@@ -92,5 +93,6 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
 //        flashButton.setImage(YPConfig.icons.flashOffIcon, for: .normal)
         flipButton.setImage(YPConfig.icons.loopIcon, for: .normal)
         shotButton.setImage(YPConfig.icons.capturePhotoImage, for: .normal)
+        shotButton.tintColor = YPColors().tintColor
     }
 }
