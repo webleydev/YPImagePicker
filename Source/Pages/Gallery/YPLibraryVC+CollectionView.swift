@@ -43,7 +43,7 @@ extension YPLibraryVC {
         multipleSelectionButtonTapped()
         
         // Update preview.
-        changeAsset(mediaManager.fetchResult[indexPath.row])
+        changeAsset(mediaManager.flippedAssets[indexPath.row])
         
         // Bring preview down and keep selected cell visible.
         panGestureHelper.resetToOriginalState()
@@ -57,12 +57,12 @@ extension YPLibraryVC {
     
     /// Removes cell from selection
     func deselect(indexPath: IndexPath) {
-        if let positionIndex = selection.firstIndex(where: { $0.assetIdentifier == mediaManager.fetchResult[indexPath.row].localIdentifier }) {
+        if let positionIndex = selection.firstIndex(where: { $0.assetIdentifier == mediaManager.flippedAssets[indexPath.row].localIdentifier }) {
             selection.remove(at: positionIndex)
 
             // Refresh the numbers
             var selectedIndexPaths = [IndexPath]()
-            mediaManager.fetchResult.enumerateObjects { [unowned self] (asset, index, _) in
+            for(index, asset) in mediaManager.flippedAssets.enumerated() {
                 if self.selection.contains(where: { $0.assetIdentifier == asset.localIdentifier }) {
                     selectedIndexPaths.append(IndexPath(row: index, section: 0))
                 }
@@ -74,7 +74,7 @@ extension YPLibraryVC {
                 v.collectionView.deselectItem(at: indexPath, animated: false)
                 v.collectionView.selectItem(at: previouslySelectedIndexPath, animated: false, scrollPosition: [])
                 currentlySelectedIndex = previouslySelectedIndexPath.row
-                changeAsset(mediaManager.fetchResult[previouslySelectedIndexPath.row])
+                changeAsset(mediaManager.flippedAssets[previouslySelectedIndexPath.row])
             }
 			
             checkLimit()
@@ -83,7 +83,7 @@ extension YPLibraryVC {
     
     /// Adds cell to selection
     func addToSelection(indexPath: IndexPath) {
-        let asset = mediaManager.fetchResult[indexPath.item]
+        let asset = mediaManager.flippedAssets[indexPath.item]
         selection.append(
             YPLibrarySelection(
                 index: indexPath.row,
@@ -94,7 +94,7 @@ extension YPLibraryVC {
     }
     
     func isInSelectionPool(indexPath: IndexPath) -> Bool {
-        return selection.contains(where: { $0.assetIdentifier == mediaManager.fetchResult[indexPath.row].localIdentifier })
+        return selection.contains(where: { $0.assetIdentifier == mediaManager.flippedAssets[indexPath.row].localIdentifier })
     }
     
     /// Checks if there can be selected more items. If no - present warning.
@@ -105,7 +105,7 @@ extension YPLibraryVC {
 
 extension YPLibraryVC: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mediaManager.fetchResult.count
+        return mediaManager.flippedAssets.count
     }
 }
 
@@ -113,7 +113,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let asset = mediaManager.fetchResult[indexPath.item]
+        let asset = mediaManager.flippedAssets[indexPath.item]
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YPLibraryViewCell",
                                                             for: indexPath) as? YPLibraryViewCell else {
                                                                 fatalError("unexpected cell in collection view")
@@ -164,7 +164,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
         let previouslySelectedIndexPath = IndexPath(row: currentlySelectedIndex, section: 0)
         currentlySelectedIndex = indexPath.row
 
-        changeAsset(mediaManager.fetchResult[indexPath.row])
+        changeAsset(mediaManager.flippedAssets[indexPath.row])
         panGestureHelper.resetToOriginalState()
         
         // Only scroll cell to top if preview is hidden.

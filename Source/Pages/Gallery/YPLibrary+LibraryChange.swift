@@ -25,19 +25,26 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
                     collectionView.reloadData()
                 } else {
                     collectionView.performBatchUpdates({
-                        let removedIndexes = collectionChanges!.removedIndexes
+                        let removedIndexes = collectionChanges!.removedIndexes?.map({ (fetchResult.count - 1) - $0 })
+                        let removedIndexSet = IndexSet(removedIndexes ?? [])
                         if (removedIndexes?.count ?? 0) != 0 {
-                            collectionView.deleteItems(at: removedIndexes!.aapl_indexPathsFromIndexesWithSection(0))
+                            collectionView.deleteItems(at: removedIndexSet.aapl_indexPathsFromIndexesWithSection(0))
                         }
-                        let insertedIndexes = collectionChanges!.insertedIndexes
+                        let insertedIndexes = collectionChanges!.insertedIndexes?.map({
+                            self.actualInsertedIndex(from: fetchResult, index: $0)
+                        })
+                        let insertedIndexSet = IndexSet(insertedIndexes ?? [])
                         if (insertedIndexes?.count ?? 0) != 0 {
-                            collectionView.insertItems(at: insertedIndexes!.aapl_indexPathsFromIndexesWithSection(0))
+                            collectionView.insertItems(at: insertedIndexSet.aapl_indexPathsFromIndexesWithSection(0))
                         }
                     }, completion: { finished in
                         if finished {
-                            let changedIndexes = collectionChanges!.changedIndexes
+                            let changedIndexes = collectionChanges!.changedIndexes?.map({
+                                (collectionChanges!.fetchResultAfterChanges.count - 1) - $0
+                            })
+                            let changedIndexSet = IndexSet(changedIndexes ?? [])
                             if (changedIndexes?.count ?? 0) != 0 {
-                                collectionView.reloadItems(at: changedIndexes!.aapl_indexPathsFromIndexesWithSection(0))
+                                collectionView.reloadItems(at: changedIndexSet.aapl_indexPathsFromIndexesWithSection(0))
                             }
                         }
                     })
@@ -45,5 +52,12 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
                 self.mediaManager.resetCachedAssets()
             }
         }
+    }
+    
+    private func actualInsertedIndex(from fetchResult: PHFetchResult<PHAsset>, index: Int) -> Int {
+        if fetchResult.count - 1 > index {
+            return (fetchResult.count - 1) - index
+        }
+        return index - fetchResult.count
     }
 }

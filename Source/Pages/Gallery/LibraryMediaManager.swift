@@ -13,7 +13,12 @@ class LibraryMediaManager {
     
     weak var v: YPLibraryView?
     var collection: PHAssetCollection?
-    internal var fetchResult: PHFetchResult<PHAsset>!
+    internal var fetchResult: PHFetchResult<PHAsset>! {
+        didSet {
+            flipAssets()
+        }
+    }
+    internal var flippedAssets: [PHAsset] = []
     internal var previousPreheatRect: CGRect = .zero
     internal var imageManager: PHCachingImageManager?
     internal var exportTimer: Timer?
@@ -172,6 +177,12 @@ class LibraryMediaManager {
         for s in self.currentExportSessions {
             s.cancelExport()
         }
+    }
+    
+    private func flipAssets() {
+        let indexPath = stride(from: 0, to: fetchResult.count, by: 1).map{ IndexPath(item: $0, section: 0) }
+        let assets = fetchResult.assetsAtIndexPaths(indexPath)
+        flippedAssets = assets.reversed()
     }
 }
 

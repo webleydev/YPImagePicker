@@ -177,7 +177,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
 
         if multipleSelectionEnabled {
             if selection.isEmpty {
-                let asset = mediaManager.fetchResult[currentlySelectedIndex]
+                let asset = mediaManager.flippedAssets[currentlySelectedIndex]
                 selection = [
                     YPLibrarySelection(index: currentlySelectedIndex,
                                        cropRect: v.currentCropRect(),
@@ -271,8 +271,8 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             mediaManager.fetchResult = PHAsset.fetchAssets(with: options)
         }
                 
-        if mediaManager.fetchResult.count > 0 {
-            changeAsset(mediaManager.fetchResult[0])
+        if !mediaManager.flippedAssets.isEmpty {
+            changeAsset(mediaManager.flippedAssets[0])
             v.collectionView.reloadData()
             v.collectionView.selectItem(at: IndexPath(row: 0, section: 0),
                                              animated: false,
@@ -292,7 +292,6 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             return userOpt
         }
         let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         options.predicate = YPConfig.library.mediaType.predicate()
         return options
     }
