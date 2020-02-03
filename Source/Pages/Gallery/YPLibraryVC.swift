@@ -532,4 +532,34 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
+    
+    internal func updateSelectionForChangedItems() {
+        guard !multipleSelectionEnabled else { return }
+        selection = selection.filter({ item in
+            mediaManager.flippedAssets.contains(where: { $0.localIdentifier == item.assetIdentifier })
+        })
+        if selection.isEmpty, !mediaManager.flippedAssets.isEmpty {
+            currentlySelectedIndex = 0
+            updateAssetAt(currentlySelectedIndex)
+            return
+        }
+        if !selection.isEmpty, !mediaManager.flippedAssets.isEmpty {
+            guard let selected = selection.first, currentlySelectedIndex < mediaManager.flippedAssets.count
+                else { return }
+            let asset = mediaManager.flippedAssets[currentlySelectedIndex]
+            if asset.localIdentifier != selected.assetIdentifier {
+                selection.removeAll()
+                let updatedIndex = mediaManager.flippedAssets.firstIndex(where: {
+                    $0.localIdentifier == selected.assetIdentifier }) ?? 0
+                currentlySelectedIndex = updatedIndex
+                updateAssetAt(updatedIndex)
+            }
+        }
+    }
+    
+    private func updateAssetAt(_ index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
+        addToSelection(indexPath: indexPath)
+        changeAsset(mediaManager.flippedAssets[index])
+    }
 }

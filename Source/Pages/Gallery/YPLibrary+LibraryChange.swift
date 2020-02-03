@@ -20,6 +20,7 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
             let collectionChanges = changeInstance.changeDetails(for: fetchResult)
             if collectionChanges != nil {
                 self.mediaManager.fetchResult = collectionChanges!.fetchResultAfterChanges
+                self.updateSelectionForChangedItems()
                 let collectionView = self.v.collectionView!
                 if !collectionChanges!.hasIncrementalChanges || collectionChanges!.hasMoves {
                     collectionView.reloadData()
@@ -31,7 +32,7 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
                             collectionView.deleteItems(at: removedIndexSet.aapl_indexPathsFromIndexesWithSection(0))
                         }
                         let insertedIndexes = collectionChanges!.insertedIndexes?.map({
-                            self.actualInsertedIndex(from: fetchResult, index: $0)
+                            self.actualInsertedIndex(from: collectionChanges!.fetchResultAfterChanges, index: $0)
                         })
                         let insertedIndexSet = IndexSet(insertedIndexes ?? [])
                         if (insertedIndexes?.count ?? 0) != 0 {
@@ -58,6 +59,6 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
         if fetchResult.count - 1 > index {
             return (fetchResult.count - 1) - index
         }
-        return index - fetchResult.count
+        return index - (fetchResult.count - 1)
     }
 }
