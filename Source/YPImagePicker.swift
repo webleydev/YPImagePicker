@@ -15,32 +15,32 @@ public protocol YPImagePickerDelegate: AnyObject {
 }
 
 open class YPImagePicker: UINavigationController {
-    
+
     private var _didFinishPicking: (([YPMediaItem], Bool) -> Void)?
     public func didFinishPicking(completion: @escaping (_ items: [YPMediaItem], _ cancelled: Bool) -> Void) {
         _didFinishPicking = completion
     }
     public weak var imagePickerDelegate: YPImagePickerDelegate?
-    
+
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return YPImagePickerConfiguration.shared.preferredStatusBarStyle
     }
-    
+
     // This nifty little trick enables us to call the single version of the callbacks.
     // This keeps the backwards compatibility keeps the api as simple as possible.
     // Multiple selection becomes available as an opt-in.
     private func didSelect(items: [YPMediaItem]) {
         _didFinishPicking?(items, false)
     }
-    
+
     let loadingView = YPLoadingView()
     private let picker: YPPickerVC!
-    
+
     /// Get a YPImagePicker instance with the default configuration.
     public convenience init() {
         self.init(configuration: YPImagePickerConfiguration.shared)
     }
-    
+
     /// Get a YPImagePicker with the specified configuration.
     public required init(configuration: YPImagePickerConfiguration) {
         YPImagePickerConfiguration.shared = configuration
@@ -49,11 +49,11 @@ open class YPImagePicker: UINavigationController {
         modalPresentationStyle = .fullScreen // Force .fullScreen as iOS 13 now shows modals as cards by default.
         picker.imagePickerDelegate = self
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 override open func viewDidLoad() {
         super.viewDidLoad()
         picker.didClose = { [weak self] in
@@ -70,7 +70,7 @@ override open func viewDidLoad() {
             transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
             transition.type = CATransitionType.fade
             self?.view.layer.add(transition, forKey: nil)
-            
+
             // Multiple items flow
             if items.count > 1 {
                 if YPConfig.library.skipSelectionsGallery {
@@ -84,7 +84,7 @@ override open func viewDidLoad() {
                     return
                 }
             }
-            
+
             // One item flow
             let item = items.first!
             switch item {
@@ -100,7 +100,7 @@ override open func viewDidLoad() {
                     }
                     self?.didSelect(items: [mediaItem])
                 }
-                
+
                 func showCropVC(photo: YPMediaPhoto, completion: @escaping (_ aphoto: YPMediaPhoto) -> Void) {
                     if case let YPCropType.rectangle(ratio) = YPConfig.showsCrop {
                         let cropVC = YPCropVC(image: photo.image, ratio: ratio)
@@ -113,7 +113,7 @@ override open func viewDidLoad() {
                         completion(photo)
                     }
                 }
-                
+
                 if YPConfig.showsPhotoFilters {
                     let filterVC = YPPhotoFiltersVC(inputPhoto: photo,
                                                     isFromSelectionVC: false)
@@ -140,17 +140,17 @@ override open func viewDidLoad() {
                 }
             }
         }
-        
+
         // If user has not customized the Nav Bar tintColor, then use black.
         if UINavigationBar.appearance().tintColor == nil {
             UINavigationBar.appearance().tintColor  = .black
         }
     }
-    
+
     deinit {
-        print("Picker deinited 👍")
+        // print("Picker deinited 👍")
     }
-    
+
     private func setupLoadingView() {
         view.sv(
             loadingView
