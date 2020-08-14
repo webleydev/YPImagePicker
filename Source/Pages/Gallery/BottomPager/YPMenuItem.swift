@@ -50,7 +50,7 @@ final class YPMenuItem: UIView {
     }
 
     func select() {
-        textLabel.textColor = YPColors().tintColor
+        textLabel.textColor = YPImagePickerConfiguration.shared.colors.bottomMenuItemSelectedTextColor
     }
     
     func deselect() {
